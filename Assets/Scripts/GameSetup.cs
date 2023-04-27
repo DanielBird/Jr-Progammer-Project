@@ -1,7 +1,10 @@
 using System;
 using UnityEngine;
-using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;using Sirenix.Serialization;
 using UnityEngine.SceneManagement;
+
+public enum gameDifficulty { Easy, Hard }; 
+
 
 public class GameSetup : MonoBehaviour
 {
@@ -9,7 +12,8 @@ public class GameSetup : MonoBehaviour
     
     [ShowInInspector] public static string CurrentPlayer;
     [ShowInInspector] public static string BestPlayer;
-    [ShowInInspector] public static int BestScore; 
+    [ShowInInspector] public static int BestScore;
+    [ShowInInspector] public gameDifficulty difficulty; 
 
     private void Awake()
     {
@@ -31,6 +35,8 @@ public class GameSetup : MonoBehaviour
         {
             BestScore = ES3.Load<int>("bestScore"); 
         }
+
+        difficulty = gameDifficulty.Easy; 
     }
     
     public void SetCurrentPlayer(string playerName)
@@ -48,5 +54,10 @@ public class GameSetup : MonoBehaviour
     {
         ES3.Save("bestPlayer", BestPlayer);
         ES3.Save("bestScore", BestScore);
+    }
+
+    public void SetDifficulty(string diff)
+    {
+        Enum.TryParse(diff, out difficulty); 
     }
 }

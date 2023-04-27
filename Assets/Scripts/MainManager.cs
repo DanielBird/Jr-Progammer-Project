@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MainManager : MonoBehaviour
 {
@@ -19,7 +21,25 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    
+    public GameObject easyBall;
+    public GameObject difficultBall; 
+
+    private void Awake()
+    {
+        if (GameSetup.Instance.difficulty == gameDifficulty.Easy)
+        {
+            easyBall.SetActive(true);
+            Ball = easyBall.GetComponent<Rigidbody>(); 
+            difficultBall.SetActive(false);
+        }
+        else
+        {
+            easyBall.SetActive(false);
+            difficultBall.SetActive(true);
+            Ball = difficultBall.GetComponent<Rigidbody>(); 
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
